@@ -1,6 +1,9 @@
 import SearchForm from './SearchForm'
 
 function Header({ darkMode, toggleDarkMode }) {
+    const handleSearch=(query)=>{
+  console.log('search query : ' ,query)
+ }
   return (
     <nav className={`shadow-lg transition-colors duration-300 ${
       darkMode ? 'bg-gray-800' : 'bg-white'
@@ -29,7 +32,7 @@ function Header({ darkMode, toggleDarkMode }) {
           <div className="flex items-center space-x-4">
             {/* Search Form */}
             <div className="hidden lg:block">
-              <SearchForm darkMode={darkMode} />
+              <SearchForm onSearch={handleSearch} darkMode={darkMode} />
             </div>
             
             {/* Dark Mode Toggle Button */}
