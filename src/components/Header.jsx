@@ -1,7 +1,10 @@
 import SearchForm from './SearchForm'
+import { useState } from 'react'
 
 function Header({ darkMode, toggleDarkMode }) {
-    const handleSearch=(query)=>{
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
+  const handleSearch=(query)=>{
   console.log('search query : ' ,query)
  }
   return (
@@ -13,29 +16,32 @@ function Header({ darkMode, toggleDarkMode }) {
           <div className={`text-2xl font-bold ${
             darkMode ? 'text-white' : 'text-gray-800'
           }`}>
-            Restaurant
+            Restorant
           </div>
-          <div className="hidden md:flex space-x-8">
-            <a href="#" className={`transition-colors ${
-              darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
-            }`}>Home</a>
-            <a href="#" className={`transition-colors ${
-              darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
-            }`}>Menu</a>
-            <a href="#" className={`transition-colors ${
-              darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
-            }`}>About</a>
-            <a href="#" className={`transition-colors ${
-              darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
-            }`}>Contact</a>
+          
+          {/* Search Form - Center position */}
+          <div className="flex-1 max-w-md mx-8">
+            <SearchForm onSearch={handleSearch} darkMode={darkMode} />
           </div>
+          
           <div className="flex items-center space-x-4">
-            {/* Search Form */}
-            <div className="hidden lg:block">
-              <SearchForm onSearch={handleSearch} darkMode={darkMode} />
+            {/* Navigation Links - Desktop */}
+            <div className="hidden md:flex space-x-6">
+              <a href="#" className={`transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
+              }`}>Home</a>
+              <a href="#" className={`transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
+              }`}>Menu</a>
+              <a href="#" className={`transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
+              }`}>About</a>
+              <a href="#" className={`transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
+              }`}>Contact</a>
             </div>
             
-            {/* Dark Mode Toggle Button */}
+            {/* Dark Mode Toggle Button - Always visible */}
             <button
               onClick={toggleDarkMode}
               className={`p-2 rounded-lg transition-colors duration-200 ${
@@ -56,17 +62,50 @@ function Header({ darkMode, toggleDarkMode }) {
               )}
             </button>
             
+            {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <button className={`${
-                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'
-              }`}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className={`p-2 rounded-lg transition-colors ${
+                  darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                }`}
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
         </div>
+        
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className={`md:hidden border-t transition-colors ${
+            darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'
+          }`}>
+            <div className="px-4 py-2 space-y-2">
+              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}>Home</a>
+              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}>Menu</a>
+              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}>About</a>
+              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
+                darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}>Contact</a>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   )

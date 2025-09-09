@@ -1,10 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import MainLayout from './layouts/MainLayout'
 import './App.css'
 import { Card } from './components/Card'
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+  // Initialize dark mode from localStorage or default to false
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedDarkMode = localStorage.getItem('darkMode')
+    return savedDarkMode ? JSON.parse(savedDarkMode) : false
+  })
+
+  // Save dark mode preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode))
+  }, [darkMode])
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
