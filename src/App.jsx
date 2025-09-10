@@ -19,15 +19,31 @@ function App() {
     setDarkMode(!darkMode)
   }
 
-  const meals ={
-    image :"https://safrescobaldistatic.blob.core.windows.net/media/2022/11/PIZZA-MARGHERITA.jpg",
-    title : "Pizza Margherita",
-    description :"Fresh mozzarella, tomato sauce, and basil leaves on a crispy thin crust. A classic Italian favorite that never disappoints with its simple yet perfect combination of flavors.",
-    price : "14.99$"
+  // const meals ={
+  //   image :"https://safrescobaldistatic.blob.core.windows.net/media/2022/11/PIZZA-MARGHERITA.jpg",
+  //   title : "Pizza Margherita",
+  //   description :"Fresh mozzarella, tomato sauce, and basil leaves on a crispy thin crust. A classic Italian favorite that never disappoints with its simple yet perfect combination of flavors.",
+  //   price : "14.99$"
+  // }
+
+  // هون رح نخزن الوجبات
+  const [meals, setMeals] = useState([])
+
+  // دالة البحث
+  const handleSearch = (query) => {
+    if (!query) return
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setMeals(data.meals || []) // إذا ما في نتائج يرجع مصفوفة فاضية
+      })
+      .catch((err) => console.error('Error:', err))
   }
 
+
   return (
-    <MainLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+    <MainLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode} handleSearch={handleSearch}>
       <div className="container mx-auto px-4">
         <h1 className={`text-3xl font-bold text-center mb-8 ${
           darkMode ? 'text-white' : 'text-gray-800'
@@ -36,7 +52,21 @@ function App() {
         </h1>
         
         {/* Meal Card */}
-        <Card darkMode={darkMode} props={meals} />
+         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {meals.length > 0 ? (
+            meals.map((meal) => (
+              <Card
+                key={meal.idMeal}
+                darkMode={darkMode}
+                meal={meal}
+              />
+            ))
+          ) : (
+            <p className={darkMode ? 'text-white' : 'text-gray-600'}>
+              No meals found. Try searching!
+            </p>
+          )}
+        </div>
       </div>
     </MainLayout>
   )

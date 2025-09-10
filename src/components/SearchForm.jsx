@@ -1,20 +1,33 @@
-function SearchForm({ onSearch, darkMode }) {
-  const handleSubmit = (event) => {
+import React, { useState, useEffect, useRef } from "react";
+
+function SearchForm({ search,setSearch, handleSearch, darkMode }) {
+
+  const inputRef = useRef(null)
+
+
+  useEffect(()=>{
+    if (inputRef.current)
+      inputRef.current.focus()
+  },[])
+
+  const onSearch = (event) => {
     event.preventDefault();
-    const query = event.target.elements.search.value;
-    console.log("Submit query:", query);
-    onSearch(query);
+    //const query = event.target.elements.search.value;
+    //console.log("Submit query:", query);
+    handleSearch(search);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center">
+    <form onSubmit={onSearch} className="flex items-center">
       <input
         type="text"
         name="search"
+        ref={inputRef}
+        value={search}
         placeholder="Search..."
-        onChange={(e) => {
+        onInput={(e) => {
           console.log("Typing query:", e.target.value);
-          onSearch(e.target.value);
+          setSearch(e.target.value);
         }}
         className={`px-3 py-1 rounded-l-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
           darkMode

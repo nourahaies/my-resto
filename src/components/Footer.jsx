@@ -21,9 +21,9 @@ function Footer({ darkMode }) {
             <div className={`${
               darkMode ? 'text-gray-300' : 'text-gray-600'
             }`}>
-              <p className="mb-2">📍 123 Main Street, City, State 12345</p>
-              <p className="mb-2">📞 (555) 123-4567</p>
-              <p>✉️ info@restaurant.com</p>
+              <p className="mb-2">📍  Damascus, Msaken-Barzeh, Main street : next to Qasioun Mall</p>
+              <p className="mb-2">📞 +963 955 400 433</p>
+              <p>✉️ info-resto@gmail.com</p>
             </div>
           </div>
 

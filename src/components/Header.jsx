@@ -1,12 +1,11 @@
-import SearchForm from './SearchForm'
 import { useState } from 'react'
+import SearchForm from './SearchForm'
 
-function Header({ darkMode, toggleDarkMode }) {
+function Header({ darkMode, toggleDarkMode , handleSearch }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   
-  const handleSearch=(query)=>{
-  console.log('search query : ' ,query)
- }
+  const [search,setSearch] = useState('')
+ 
   return (
     <nav className={`shadow-lg transition-colors duration-300 ${
       darkMode ? 'bg-gray-800' : 'bg-white'
@@ -21,7 +20,7 @@ function Header({ darkMode, toggleDarkMode }) {
           
           {/* Search Form - Center position */}
           <div className="flex-1 max-w-md mx-8">
-            <SearchForm onSearch={handleSearch} darkMode={darkMode} />
+            <SearchForm search={search} setSearch={setSearch} handleSearch={handleSearch} darkMode={darkMode} />
           </div>
           
           <div className="flex items-center space-x-4">
