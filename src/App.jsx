@@ -29,6 +29,28 @@ function App() {
   // هون رح نخزن الوجبات
   const [meals, setMeals] = useState([])
 
+  // Fetch 6 random meals when the component mounts
+  useEffect(() => {
+    const fetchRandomMeals = async () => {
+      try {
+        const randomMeals = []
+        // Fetch 6 random meals by making 6 separate API calls
+        for (let i = 0; i < 6; i++) {
+          const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+          const data = await response.json()
+          if (data.meals && data.meals[0]) {
+            randomMeals.push(data.meals[0])
+          }
+        }
+        setMeals(randomMeals)
+      } catch (error) {
+        console.error('Error fetching random meals:', error)
+      }
+    }
+
+    fetchRandomMeals()
+  }, [])
+
   // دالة البحث
   const handleSearch = (query) => {
     if (!query) return
@@ -40,8 +62,7 @@ function App() {
       })
       .catch((err) => console.error('Error:', err))
   }
-
-
+  
   return (
     <MainLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode} handleSearch={handleSearch}>
       <div className="container mx-auto px-4">
@@ -51,8 +72,8 @@ function App() {
           Our Restaurant Menu
         </h1>
         
-        {/* Meal Card */}
-         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Meal Cards */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {meals.length > 0 ? (
             meals.map((meal) => (
               <Card
@@ -62,9 +83,16 @@ function App() {
               />
             ))
           ) : (
-            <p className={darkMode ? 'text-white' : 'text-gray-600'}>
-              No meals found. Try searching!
-            </p>
+            <div className={`col-span-full text-center py-8 ${
+              darkMode ? 'text-white' : 'text-gray-600'
+            }`}>
+              <p className="text-lg mb-2">Loading delicious meals...</p>
+              <div className="animate-pulse">
+                <div className={`h-4 rounded w-32 mx-auto ${
+                  darkMode ? 'bg-gray-700' : 'bg-gray-300'
+                }`}></div>
+              </div>
+            </div>
           )}
         </div>
       </div>
