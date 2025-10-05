@@ -3,6 +3,8 @@ import MainLayout from './layouts/MainLayout'
 import './App.css'
 import { Card } from './components/Card'
 
+const API_BASE_URL=import.meta.env.VITE_API_BASE_URL;
+
 function App() {
   // Initialize dark mode from localStorage or default to false
   const [darkMode, setDarkMode] = useState(() => {
@@ -29,14 +31,15 @@ function App() {
   // هون رح نخزن الوجبات
   const [meals, setMeals] = useState([])
 
+  const [menu,setMenu]=useState('Our Menu')
   // Fetch 6 random meals when the component mounts
   useEffect(() => {
     const fetchRandomMeals = async () => {
       try {
         const randomMeals = []
-        // Fetch 6 random meals by making 6 separate API calls
-        for (let i = 0; i < 6; i++) {
-          const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+        // Fetch 8 random meals by making 6 separate API calls
+        for (let i = 0; i < 8; i++) {
+          const response = await fetch(`${API_BASE_URL}/random.php`)
           const data = await response.json()
           if (data.meals && data.meals[0]) {
             randomMeals.push(data.meals[0])
@@ -52,13 +55,32 @@ function App() {
   }, [])
 
   // دالة البحث
-  const handleSearch = (query) => {
-    if (!query) return
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+  const handleSearch = async (query) => {
+    if (!query) {
+      // If search is empty, fetch random meals and reset to "Our Menu"
+      try {
+        const randomMeals = []
+        for (let i = 0; i < 8; i++) {
+          const response = await fetch(`${API_BASE_URL}/random.php`)
+          const data = await response.json()
+          if (data.meals && data.meals[0]) {
+            randomMeals.push(data.meals[0])
+          }
+        }
+        setMeals(randomMeals)
+        setMenu('Our Menu')
+      } catch (error) {
+        console.error('Error fetching random meals:', error)
+      }
+      return
+    }
+    
+    const url = `${API_BASE_URL}/search.php?s=${query}`
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setMeals(data.meals || []) // إذا ما في نتائج يرجع مصفوفة فاضية
+        setMenu(`search results for "${query}"`)
+        setMeals(data.meals|[]) 
       })
       .catch((err) => console.error('Error:', err))
   }
@@ -69,11 +91,11 @@ function App() {
         <h1 className={`text-3xl font-bold text-center mb-8 ${
           darkMode ? 'text-white' : 'text-gray-800'
         }`}>
-          Our Restaurant Menu
+          {menu}
         </h1>
         
         {/* Meal Cards */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 lg:grid-cols-4">
           {meals.length > 0 ? (
             meals.map((meal) => (
               <Card

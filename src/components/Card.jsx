@@ -22,8 +22,7 @@ export function Card({ darkMode, meal }) {
         }`}>
           {meal.strInstructions?.slice(0, 120)}...
         </p>
-        <div className="flex items-center justify-between mt-auto">
-          <span className="text-2xl font-bold text-green-600">$14.99</span>
+        <div className="flex items-center justify-end mt-auto">
           <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200">
             Order Now
           </button>
@@ -32,3 +31,6 @@ export function Card({ darkMode, meal }) {
     </div>
   )
 }
+
+
+         /** <span className="text-2xl font-bold text-green-600">$14.99</span> */ 

@@ -15,7 +15,7 @@ function Header({ darkMode, toggleDarkMode , handleSearch }) {
           <div className={`text-2xl font-bold ${
             darkMode ? 'text-white' : 'text-gray-800'
           }`}>
-            Restorant
+            Restoranto
           </div>
           
           {/* Search Form - Center position */}
