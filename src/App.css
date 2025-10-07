@@ -41,3 +41,8 @@
   color: #888;
 } */
 @import "tailwindcss";
+
+/* Apply Alan Sans as the primary font family */
+body {
+  font-family: 'Alan Sans', sans-serif;
+}
