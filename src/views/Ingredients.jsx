@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Component for individual ingredient card
-function IngredientCard({ ingredient, darkMode }) {
+function IngredientCard({ ingredient, darkMode, onIngredientClick }) {
   const ingredientImageUrl = `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}.png`
   
   return (
-    <div className={`max-w-sm mx-auto rounded-lg shadow-md overflow-hidden transition-colors duration-300 flex flex-col h-full ${
-      darkMode ? 'bg-gray-800' : 'bg-white'
-    }`}>
+    <div className={`max-w-sm mx-auto rounded-lg shadow-md overflow-hidden transition-colors duration-300 flex flex-col h-full cursor-pointer hover:shadow-lg transform hover:scale-105 transition-transform ${
+      darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'
+    }`}
+    onClick={() => onIngredientClick(ingredient.strIngredient)}
+    >
       {/* Image */}
       <div className="flex justify-center items-center p-4 bg-gray-50 dark:bg-gray-700">
         <img 
@@ -48,6 +51,8 @@ function IngredientCard({ ingredient, darkMode }) {
 }
 
 export default function Ingredients() {
+  const navigate = useNavigate()
+  
   // Initialize dark mode from localStorage or default to false
   const [darkMode, setDarkMode] = useState(() => {
     const savedDarkMode = localStorage.getItem('darkMode')
@@ -99,6 +104,11 @@ export default function Ingredients() {
     // This can be enhanced later to filter ingredients
   }
 
+  // Handle ingredient click to navigate to meals page
+  const handleIngredientClick = (ingredientName) => {
+    navigate(`/meals/${encodeURIComponent(ingredientName)}`)
+  }
+
   return (
     <MainLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode} handleSearch={handleSearch}>
       <div className="container mx-auto px-4">
@@ -146,6 +156,7 @@ export default function Ingredients() {
                   key={ingredient.strIngredient || index}
                   ingredient={ingredient}
                   darkMode={darkMode}
+                  onIngredientClick={handleIngredientClick}
                 />
               ))
             ) : (

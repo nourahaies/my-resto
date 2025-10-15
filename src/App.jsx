@@ -1,7 +1,9 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-import Home from './views/Home'
+import Home2 from './views/Home2'
 import Ingredients from './views/Ingredients'
+import About from './views/About'
+import MealsByIngredient from './views/MealsByIngredient'
 
 //const API_BASE_URL=import.meta.env.VITE_API_BASE_URL;
 
@@ -10,8 +12,10 @@ function App() {
   
   return (
     <Routes>
-      <Route path="/" element={<Home/>}   />
+      <Route path="/" element={<Home2/>}   />
       <Route path="/ingredients" element={<Ingredients/>}   />
+      <Route path="/about" element={<About/>}   />
+      <Route path="/meals/:ingredient" element={<MealsByIngredient/>}   />
     </Routes>
   )
 }

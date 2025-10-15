@@ -94,7 +94,7 @@ export default function Home() {
         </h1>
         
         {/* Meal Cards */}
-        <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr">
           {meals.length > 0 ? (
             meals.map((meal) => (
               <Card

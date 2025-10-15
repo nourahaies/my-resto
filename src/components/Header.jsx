@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import SearchForm from './SearchForm'
+import { useLocation } from 'react-router-dom'
 
 function Header({ darkMode, toggleDarkMode , handleSearch }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   const [search,setSearch] = useState('')
+  
+  const location = useLocation()
  
   return (
     <nav className={`shadow-lg transition-colors duration-300 ${
@@ -26,14 +29,20 @@ function Header({ darkMode, toggleDarkMode , handleSearch }) {
           <div className="flex items-center space-x-4">
             {/* Navigation Links - Desktop */}
             <div className="hidden md:flex space-x-6">
-              <a href="#" className={`transition-colors ${
-                darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600'
+              <a href="/" className={`transition-colors ${
+                location.pathname === '/' 
+                  ? 'text-indigo-600 dark:text-indigo-400 font-medium' 
+                  : (darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600')
               }`}>Home</a>
-              <a href="#" className={`transition-colors ${
-                darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600'
-              }`}>Menu</a>
-              <a href="#" className={`transition-colors ${
-                darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600'
+              <a href="/ingredients" className={`transition-colors ${
+                location.pathname === '/ingredients' 
+                  ? 'text-indigo-600 dark:text-indigo-400 font-medium' 
+                  : (darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600')
+              }`}>Ingredients</a>
+              <a href="/about" className={`transition-colors ${
+                location.pathname ==='/about'
+                  ? 'text-indigo-600 dark:text-indigo-400 font-medium'
+                  : ( darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600')
               }`}>About</a>
               <a href="#" className={`transition-colors ${
                 darkMode ? 'text-gray-300 hover:text-indigo-400' : 'text-gray-600 hover:text-indigo-600'
@@ -90,14 +99,20 @@ function Header({ darkMode, toggleDarkMode , handleSearch }) {
             darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'
           }`}>
             <div className="px-4 py-2 space-y-2">
-              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
-                darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100'
+              <a href="/" className={`block py-2 px-3 rounded transition-colors ${
+                location.pathname === '/' 
+                  ? 'text-indigo-600 dark:text-indigo-400 font-medium bg-gray-100 dark:bg-gray-700' 
+                  : (darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100')
               }`}>Home</a>
-              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
-                darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100'
-              }`}>Menu</a>
-              <a href="#" className={`block py-2 px-3 rounded transition-colors ${
-                darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100'
+              <a href="/ingredients" className={`block py-2 px-3 rounded transition-colors ${
+                location.pathname === '/ingredients' 
+                  ? 'text-indigo-600 dark:text-indigo-400 font-medium bg-gray-100 dark:bg-gray-700' 
+                  : (darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100')
+              }`}>Ingredients</a>
+              <a href="/about" className={`block py-2 px-3 rounded transition-colors ${
+                location.pathname ==='/about'
+                  ? 'text-indigo-600 dark:text-indigo-400 font-medium bg-gray-100 dark:bg-gray-700' 
+                  : ( darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100')
               }`}>About</a>
               <a href="#" className={`block py-2 px-3 rounded transition-colors ${
                 darkMode ? 'text-gray-300 hover:text-indigo-400 hover:bg-gray-700' : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-100'
